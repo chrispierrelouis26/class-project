@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+        crossorigin="anonymous">
+        <link rel="stylesheet" href="./assets/style/style.css">
+    <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
+    <script src="./assets/script/db.js"></script>
+    <script src="./assets/script/main.js"></script>
+    <script src="./assets/script/events.js"></script>
+    <script src="./assets/script/restaurants.js"></script>
+    <script src="./assets/script/nps.js"></script>
+    <script src="./assets/script/weather.js"></script>
+
+    <title>Travelling</title>
+
+</head>
+
+
+<body class="body">
+
+    <br>
+    <br>
+    <form class="container">
+        <div class="row">
+            <div class="col">
+
+
+                <input type="search" class="form-control" placeholder="City" aria-describedby="searchHelp" id="queryval" aria-label="Search">
+                <small id="searchHelp" class="form-text text-warning font-weight-bold"></small>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col">
+
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" id="btn1" type="submit">Search</button>
+                </div>
+            </div>
+    </form>
+
+    <div class="container">
+
+        <!-- <h1 class="display-4">You've Booked Your Trip!</h1>
+            <p class="lead">Now Explore Your Destination...</p> -->
+
+        <br>
+        <br>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card" style="width: 28rem;">
+                    <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner" id="target">
+
+                        </div>
+                    </div>
+                    <!-- <img class="card-img-top" id="cardImg" src="http://placehold.it/150x150" alt="Card image cap"> -->
+                    <div class="card-body">
+                        <h5 class="card-title" id="cityName">Destination Name</h5>
+                        <p class="card-text" id="cardWeather">Currently:</p>
+
+                        <ul>
+
+                            <li id='temp'></li>
+                            <li id="humidity"></li>
+                            <li id="wind"></li>
+
+
+                        </ul>
+                    </div>
+
+                </div>
+                </li>
+                </ul>
+
+            </div>
+
+
+            <div class="col-lg-6">
+                <div class="accordion" style="width: 28rem;" id="accordionExample">
+                    <div class="card">
+                        <div class="card-header" id="headingTop5">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link stats" type="button" data-toggle="collapse" data-target="#collapseTop5"
+                                    data-stat="Top 5 Places" aria-expanded="true" aria-controls="collapseTop5">
+                                    <i class="fas fa-sun">Top 5 Searches</i>
+                                </button>
+                            </h5>
+                        </div>
+
+                        <div id="collapseTop5" class="collapse" aria-labelledby="headingTop5" data-parent="#accordionExample">
+                            <div class="card-body">
+                                <div class="accordion" id="top5InnerAccordion"></div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header" id="headingEvents">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed stats" type="button" data-stat="Events"
+                                    data-toggle="collapse" data-target="#collapseEvents" aria-expanded="false"
+                                    aria-controls="collapseEvents">
+                                    <i class="fas fa-calendar-alt"> Events</i>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseEvents" class="collapse" aria-labelledby="headingEvents" data-parent="#accordionExample">
+                            <div class="card-body">
+                                <div class="accordion" id="eventsInnerAccordion"></div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="headingRestaurants">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed stats" type="button" data-stat="Restaurants"
+                                    data-toggle="collapse" data-target="#collapseRestaurants" aria-expanded="false"
+                                    aria-controls="collapseRestaurants">
+                                    <i class="fas fa-utensils"> Restaurants</i>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseRestaurants" class="collapse" aria-labelledby="headingRestaurants" data-parent="#accordionExample">
+                            <div class="card-body">
+                                <div class="accordian" id="restaurantsInnerAccordion"></div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="card">
+                        <div class="card-header" id="headingParks">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed stats" type="button" data-stat="National Parks"
+                                    data-toggle="collapse" data-target="#collapseParks" aria-expanded="false"
+                                    aria-controls="collapseParks">
+                                    <i class="fas fa-landmark"> National Parks</i>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseParks" class="collapse" aria-labelledby="headingParks" data-parent="#accordionExample">
+                            <div class="card-body">
+                                <div class="accordian" id="nationalparkInnerAccordion"></div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal" id="exampleModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">Loading your results , please wait</h5>
+                    </div>
+
+                    <div class="modal-body">
+                        <img src="./assets/images/Loading_icon2.gif" alt="" srcset="">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+</body>
+
+<script>
+    $(document).ready(function () {
+        $("#queryval").keypress(function(event){
+        var inputValue = event.which;
+        // allow letters and whitespaces only.
+        if(!(inputValue >= 65 && inputValue <= 120) && (inputValue != 32 && inputValue != 0 && inputValue != 13)) { 
+            event.preventDefault(); 
+        }
+    });
+
+
+
+        if (window.location.search!== '') {
+            var myArr = window.location.search.split("")
+            var mystring = ""
+            for (var i = 2; i < myArr.length; i++) {
+
+                mystring += myArr[i];
+
+                
+            }
+            history.pushState(null, "", location.href.split("?")[0])
+            var name = getName();
+            function getName(){
+                if (mystring.search("%20") !== -1){
+                    return mystring.replace("%20" , " ");
+                }else {
+                    return mystring;
+                };
+            }
+            console.log("function called: Name = " + name);
+            var myUrl =
+                'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyBK9jkFfnWFcee-sTKz_Y14T4RMu_SBbuo&address=city%20of%20' +
+                name + '&sensor=false'
+            $('#exampleModal').modal('toggle');
+            console.log(myUrl);
+            anotherquery(myUrl);
+
+            }
+
+
+    })
+
+
+
+
+
+
+
+    $("body").on("click", ".stats", function () {
+
+
+        statistics($(this).data("stat"))
+
+    })
+    $("body").on("click", ".refstats", function () {
+
+
+        referrals($(this).data("ref"))
+
+})
+
+    $("body").on("click", ".topcities", function () {
+
+        var name = $(this).text();
+        
+        console.log("function called");
+        var myUrl =
+            'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyBK9jkFfnWFcee-sTKz_Y14T4RMu_SBbuo&address=city%20of%20' +
+            name + '&sensor=false'
+        console.log(myUrl);
+        anotherquery(myUrl);
+
+    })
+
+
+    $("#btn1").on("click", function (e) {
+        e.preventDefault();
+
+        var test = $('#queryval').val();
+
+        var myUrl =
+            'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyBK9jkFfnWFcee-sTKz_Y14T4RMu_SBbuo&address=city%20of%20' +
+            test + '&sensor=false'
+        // loadDoc(myUrl , myFunction);
+        console.log(myUrl);
+        anotherquery(myUrl);
+    })
+
+
+
+
+   
+</script>
+
+
+
+</html>
